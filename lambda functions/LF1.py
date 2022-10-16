@@ -144,6 +144,8 @@ def handle_dining_suggestions(event):
                 reservation_template[slot] = valid_nums[event['currentIntent']['slots'].get(slot)]
             else:
                 reservation_template[slot] = event['currentIntent']['slots'].get(slot)
+        
+        
 
 
     send_to_sqs(reservation_template)
@@ -181,6 +183,10 @@ def send_to_sqs(reservation_json_response):
 
     client = boto3.client('sqs')
     url = client.get_queue_url(QueueName="Q1")['QueueUrl']
+    print("send_to_sqs Yash",reservation_json_response)
+    if "EmailId" in reservation_json_response:
+        reservation_json_response['PhoneNumber'] = reservation_json_response['EmailId']
+        del reservation_json_responsex['EmailId']
     
     try:
         response = client.send_message(QueueUrl=url, MessageBody=json.dumps(reservation_json_response))
