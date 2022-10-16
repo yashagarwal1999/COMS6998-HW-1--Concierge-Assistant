@@ -1,0 +1,6 @@
+MASTER_NAME=Master
+MASTER_PASSWORD=Master@123
+DOMAIN_ENDPOINT=https://search-elastic-search-65o4fhllai2uihvy2ky3m6oz6a.us-east-1.es.amazonaws.com
+JSON_FILENAME=data.json
+
+curl -XPOST -u $MASTER_NAME:$MASTER_PASSWORD $DOMAIN_ENDPOINT/_bulk --data-binary @$JSON_FILENAME -H 'Content-Type: application/json' > curl_output.log
